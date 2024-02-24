@@ -10,6 +10,8 @@ from rest_framework import viewsets
 from .serializers import ProfileSerializer, BlogSerializer
 from django.views import generic as views
 
+from .. import blog
+
 
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
@@ -34,19 +36,19 @@ class ProfileCreateView(views.CreateView):
     model = Profile
     form_class = ProfileCreateForm
     template_name = 'profile/create-profile.html'
-    success_url = reverse_lazy('game-dashboard')
+    success_url = reverse_lazy('dashboard')
 
 
 class ProfileDetailsView(views.View):
     def get(self, request, *args, **kwargs):
         profile = Profile.objects.first()
-        games_count = Blog.objects.all().count()
-        rating_list = [game.rating for game in Blog.objects.all()]
+        blog_count = Blog.objects.all().count()
+        rating_list = [blog.utility for blog in Blog.objects.all()]
         average_rating = sum(rating_list) / len(rating_list) if rating_list else 0.0
         average_rating = f'{average_rating:.1f}'
         context = {
             'profile': profile,
-            'games_count': games_count,
+            'blog_count': blog_count,
             'average_rating': average_rating,
         }
         return render(request, 'profile/details-profile.html', context)
@@ -74,51 +76,51 @@ class ProfileDeleteView(views.DeleteView):
         return Profile.objects.first()
 
 
-class BLogDashboardView(views.TemplateView):
+class DashboardView(views.TemplateView):
     template_name = 'common/dashboard.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['profile'] = Profile.objects.first()
-        context['games'] = Blog.objects.all()
+        context['blog'] = Blog.objects.all()
         return context
 
 
 class BlogCreateView(views.CreateView):
     model = Blog
     form_class = BlogCreateForm
-    template_name = 'game/create-game.html'
-    success_url = reverse_lazy('game-dashboard')
+    template_name = 'blog/blog-create.html'
+    success_url = reverse_lazy('dashboard')
 
 
-class BlopgDetailsView(View):
+class BlogDetailsView(View):
     def get(self, request, pk, *args, **kwargs):
         profile = Profile.objects.first()
-        game = Blog.objects.get(pk=pk)
+        blog = Blog.objects.get(pk=pk)
         context = {
-            'game': game,
+            'blog': blog,
             'profile': profile,
         }
-        return render(request, 'game/details-game.html', context)
+        return render(request, 'blog/details-blog.html', context)
 
 
 class BlogEditView(views.UpdateView):
     model = Blog
     form_class = BlogEditForm
-    template_name = 'game/edit-game.html'
-    success_url = reverse_lazy('game-dashboard')
+    template_name = 'blog/edit-blog.html'
+    success_url = reverse_lazy('dashboard')
 
 
 def blog_delete(request, pk):
     profile = Profile.objects.first()
-    game = Blog.objects.filter(pk=pk).get()
+    blog = Blog.objects.filter(pk=pk).get()
     form = BlogDeleteForm(request.POST or None, instance=game)
     if form.is_valid():
         form.save()
-        return redirect('game-dashboard')
+        return redirect('dashboard')
     context = {
         'form': form,
         'profile': profile,
-        'game': game
+        'blog': blog
     }
-    return render(request, 'game/delete-game.html', context)
+    return render(request, 'blog/delete-blog.html', context)

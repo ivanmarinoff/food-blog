@@ -4,6 +4,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 import uuid
 
+
 class Profile(models.Model):
     email = models.EmailField(
         blank=False,
@@ -57,7 +58,7 @@ class Blog(models.Model):
         unique=True,
     )
     category = models.CharField(
-        max_length=15,
+        max_length=30,
         choices=[
             ("Месо", "Месо"),
             ("Риба", "Риба"),

@@ -2,27 +2,27 @@
 {% load static %}
 {% block content %}
     <!-- Display paragraph: If there are no games-->
-    {% if not games %}
-    <p class="no-articles">No games yet</p>
+    {% if not blog %}
+    <p class="no-articles">No post`s yet</p>
     {% else %}
     <!-- Display div "game" with information about every game (if any)-->
     <section id="welcome-world">
 
         <!-- first game-->
-        {% for game in games %}
+        {% for blog in blog %}
         <div class="game">
             <div class="image-wrap">
-                <!-- game image -->
-                <img class ="image-wrap" src="{{ game.image_url }}"
-                     alt="{{ game.title }}">
+                <!-- blog image -->
+                <img class ="image-wrap" src="{{ blog.image_url }}"
+                     alt="{{ blog.title }}">
             </div>
             <!-- game title -->
-            <h3>{{ game.title }}</h3>
+            <h3>{{ blog.title }}</h3>
             <!-- game category-->
-            <h1>{{ game.category }}</h1>
+            <h1>{{ blog.category }}</h1>
             <div class="data-buttons">
                 <!-- game details button -->
-                <a href="{% url 'game-details' pk=game.pk %}" class="btn details-btn">Details</a>
+                <a href="{% url 'blog-details' pk=blog.pk %}" class="btn details-btn">Details</a>
             </div>
         </div>
         {% endfor %}

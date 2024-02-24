@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <section id="delete-page" class="auth">
+        <form id="register" method="post" action="{% url 'blog-edit' pk=blog.pk %}">
+            <div class="container">
+                <h1>Edit Blog</h1>
+               {{ form }}
+                <input class="btn submit" type="submit" value="Edit BLog">
+                {% csrf_token %}
+            </div>
+        </form>
+    </section>
+{% endblock %}

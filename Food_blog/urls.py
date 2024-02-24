@@ -22,11 +22,11 @@ from Food_blog.blog.views import ProfileViewSet, BlogViewSet
 
 router = routers.DefaultRouter()
 router.register(r"profile", ProfileViewSet)
-router.register(r"game", BlogViewSet)
+router.register(r"blog", BlogViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("Food_blog.urls")),
+    path("", include("Food_blog.blog.urls")),
     path("", include(router.urls)),
 ]
 

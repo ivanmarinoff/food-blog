@@ -18,7 +18,7 @@
         <h1><a class="home" href="{% url 'index' %}">Syiana`s Blog</a></h1>
         <nav>
 
-            {% if profile %}
+            {% if request.user.is_authenticated %}
             <!-- if the user has not created a profile -->
             <a href="{% url 'dashboard' %}">Dashboard</a>
             <a href="{% url 'blog-create' %}">Create Blog</a>

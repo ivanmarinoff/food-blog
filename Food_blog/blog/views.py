@@ -1,10 +1,6 @@
-from typing import Any
 from django.shortcuts import render, redirect
 from django.views import View
-from django.views.generic import TemplateView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from .models import Profile, Blog
 from .forms import *
 from rest_framework import viewsets
 from .serializers import ProfileSerializer, BlogSerializer
@@ -114,7 +110,7 @@ class BlogEditView(views.UpdateView):
 def blog_delete(request, pk):
     profile = Profile.objects.first()
     blog = Blog.objects.filter(pk=pk).get()
-    form = BlogDeleteForm(request.POST or None, instance=game)
+    form = BlogDeleteForm(request.POST or None, instance=blog)
     if form.is_valid():
         form.save()
         return redirect('dashboard')

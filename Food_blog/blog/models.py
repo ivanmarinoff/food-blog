@@ -94,7 +94,7 @@ class Blog(models.Model):
     )
     profile = models.ForeignKey(
         Profile,
-        related_name='games',
+        related_name='blog',
         on_delete=models.CASCADE,
         default=Profile.objects.first,
     )

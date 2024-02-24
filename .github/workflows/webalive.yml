@@ -1,0 +1,21 @@
+name: Schedule for GET requests
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+jobs:
+  keep-it-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Keep WebApp alive
+        run: |
+          for i in {1..2}
+          do
+            echo "Execute GET requests"
+            response=$(curl -sS https://syiana-s-blog.onrender.com/)
+            echo "Wait 300 seconds"
+            sleep 300
+            echo "GET Request operation was successful"
+          done

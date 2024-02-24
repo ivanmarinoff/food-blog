@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/static/images/favicon.ico"/>
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+    <title>GamesPlay</title>
+</head>
+
+<body>
+<div id="box">
+    <header>
+
+        <!-- Navigation Bar -->
+        <h1><a class="home" href="{% url 'index' %}">GamesPlay</a></h1>
+        <nav>
+
+            {% if profile %}
+            <!-- if the user has not created a profile -->
+            <a href="{% url 'game-dashboard' %}">Dashboard</a>
+            <a href="{% url 'game-create' %}">Create Game</a>
+            <a href="{% url 'profile-details' %}">Profile</a>
+            {% else %}
+            <a href="{% url 'profile-create' %}">Create Profile</a>
+             {% endif %}
+
+        </nav>
+    </header>
+
+
+    {% block content %}
+    {% endblock %}
+    <!-- footer -->
+    <footer>
+        &copy;ivanmarinoff. All rights reserved.
+    </footer>
+
+</div>
+</body>
+</html>
